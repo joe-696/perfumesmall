@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Perfumes Elegante</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/kecg4f6DjszhYyh1/gqnF6otP3QVXvfeYQ03QY6xnJCEaXfOHrSYYmVYekXjLwRhvWjVzDFX1rZdNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom CSS -->
+    <style>
+        /* Reset de Márgenes y Padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Fuentes */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-image: url('https://via.placeholder.com/1920x1080.png?text=Fondo+Amaderado');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        /* Barra de Navegación */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #D4AF37; /* Dorado */
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            margin-left: 20px;
+        }
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #D4AF37; /* Dorado */
+        }
+
+        /* Sección Hero */
+        .hero {
+            height: 100vh;
+            background-image: url('https://via.placeholder.com/1920x1080.png?text=Hero+Image');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #D4AF37; /* Dorado */
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-content .btn {
+            padding: 10px 30px;
+            background-color: #D4AF37; /* Dorado */
+            color: #000;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .hero-content .btn:hover {
+            background-color: #b69330;
+        }
+
+        /* Sección de Productos */
+        .products {
+            padding: 80px 30px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .products h2 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #D4AF37; /* Dorado */
+        }
+
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #D4AF37; /* Dorado */
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+
+        .product-info .price {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .product-info .btn {
+            padding: 8px 20px;
+            background-color: #D4AF37; /* Dorado */
+            color: #000;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .product-info .btn:hover {
+            background-color: #b69330;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px 30px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer .social-icons a {
+            margin: 0 10px;
+            color: #D4AF37; /* Dorado */
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .footer .social-icons a:hover {
+            color: #fff;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .product-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de Navegación -->
+    <nav class="navbar">
+        <div class="brand">Elegancia Perfumes</div>
+        <ul class="nav-links">
+            <li><a href="#hero">Inicio</a></li>
+            <li><a href="#products">Productos</a></li>
+            <li><a href="#contact">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sección Hero -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Bienvenido a Elegancia Perfumes</h1>
+            <p>Descubre las fragancias más exclusivas y sofisticadas.</p>
+            <button class="btn">Explorar Productos</button>
+        </div>
+    </section>
+
+    <!-- Sección de Productos -->
+    <section class="products" id="products">
+        <h2>Nuestros Perfumes</h2>
+        <div class="product-grid">
+            <!-- Tarjeta de Producto 1 -->
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x400.png?text=Perfume+1" alt="Perfume 1">
+                <div class="product-info">
+                    <h3>Fragancia A</h3>
+                    <p>Una mezcla perfecta de rosas y sándalo.</p>
+                    <div class="price">$79.99</div>
+                    <button class="btn">Añadir al Carrito</button>
+                </div>
+            </div>
+            <!-- Tarjeta de Producto 2 -->
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x400.png?text=Perfume+2" alt="Perfume 2">
+                <div class="product-info">
+                    <h3>Fragancia B</h3>
+                    <p>Notas frescas de cítricos con toques amaderados.</p>
+                    <div class="price">$89.99</div>
+                    <button class="btn">Añadir al Carrito</button>
+                </div>
+            </div>
+            <!-- Tarjeta de Producto 3 -->
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x400.png?text=Perfume+3" alt="Perfume 3">
+                <div class="product-info">
+                    <h3>Fragancia C</h3>
+                    <p>Un exclusivo aroma oriental con especias.</p>
+                    <div class="price">$99.99</div>
+                    <button class="btn">Añadir al Carrito</button>
+                </div>
+            </div>
+            <!-- Tarjeta de Producto 4 -->
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x400.png?text=Perfume+4" alt="Perfume 4">
+                <div class="product-info">
+                    <h3>Fragancia D</h3>
+                    <p>Elegante combinación de almizcle y vainilla.</p>
+                    <div class="price">$89.99</div>
+                    <button class="btn">Añadir al Carrito</button>
+                </div>
+            </div>
+            <!-- Añade más tarjetas de productos según sea necesario -->
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section class="footer" id="contact">
+        <p>&copy; 2024 Elegancia Perfumes. Todos los derechos reservados.</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <!-- Añade más iconos de redes sociales si lo deseas -->
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // Seleccionar todos los botones de "Añadir al Carrito"
+        const addToCartButtons = document.querySelectorAll('.btn');
+
+        // Añadir evento de click a cada botón
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Aquí puedes implementar la lógica para añadir al carrito
+                alert('Producto añadido al carrito!');
+            });
+        });
+
+        // Suavizar el desplazamiento al hacer clic en los enlaces de navegación
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                window.scrollTo({
+                    top: targetSection.offsetTop - 70, // Ajustar según la altura de la navbar
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
