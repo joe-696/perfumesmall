@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - SCENTUAL BLISS</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/kecg4f6DjszhYyh1/gqnF6otP3QVXvfeYQ03QY6xnJCEaXfOHrSYYmVYekXjLwRhvWjVzDFX1rZdNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--color-secundario);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+        }
+
+        /* Formulario */
+        .form-container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--color-secundario);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select,
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .btn {
+            padding: 15px;
+            background-color: var(--color-secundario);
+            color: #000;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--color-boton-hover);
+            transform: translateY(-3px);
+        }
+
+        /* Mensajes */
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Tabla de Productos */
+        .table-container {
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: var(--color-secundario);
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Botones de Acción */
+        .action-btn {
+            background-color: var(--color-secundario);
+            border: none;
+            color: #000;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, transform 0.3s;
+            margin: 0 5px;
+        }
+
+        .action-btn.edit {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .action-btn.edit:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .action-btn.delete {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        .action-btn.delete:hover {
+            background-color: #da190b;
+            transform: translateY(-2px);
+        }
+
+        /* Variables de Color */
+        :root {
+            --color-secundario: #b08d37; /* Dorado más oscuro */
+            --color-boton-hover: #996b30;
+        }
+
+        @media (max-width: 1000px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .form-container, .table-container {
+                padding: 20px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .action-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Panel de Administrador - Elegancia Perfumes</h1>
+    </div>
+
+    <div class="container">
+        <!-- Formulario para Agregar/Editar Perfumes -->
+        <div class="form-container">
+            <h2 id="form-title">Agregar Nuevo Perfume</h2>
+            <form id="perfumeForm">
+                <label for="marca">Marca *</label>
+                <input type="text" id="marca" name="marca" required>
+
+                <label for="nombre">Nombre *</label>
+                <input type="text" id="nombre" name="nombre" required>
+
+                <label for="genero">Género</label>
+                <select id="genero" name="genero">
+                    <option value="">Selecciona Género (Opcional)</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Unisex">Unisex</option>
+                </select>
+
+                <label for="descripcion">Descripción *</label>
+                <textarea id="descripcion" name="descripcion" required></textarea>
+
+                <label for="tipo">Tipo *</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="">Selecciona Tipo</option>
+                    <option value="Completo">Perfume Completo</option>
+                    <option value="Decant">Decant</option>
+                </select>
+
+                <label for="precio">Precio ($) *</label>
+                <input type="number" id="precio" name="precio" min="0" step="0.01" required>
+
+                <!-- Reemplazado el campo de URL de imagen por un campo de carga de archivo -->
+                <label for="imagen">Imagen del Producto *</label>
+                <input type="file" id="imagen" name="imagen" accept="image/*" required>
+
+                <!-- Campo oculto para el ID del producto (se usará para la edición) -->
+                <input type="hidden" id="productId" name="productId">
+
+                <button type="submit" class="btn" id="submitBtn">Agregar Perfume</button>
+            </form>
+            <div id="message" class="message"></div>
+        </div>
+
+        <!-- Tabla de Productos Existentes -->
+        <div class="table-container">
+            <h2>Listado de Productos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Marca</th>
+                        <th>Nombre</th>
+                        <th>Género</th>
+                        <th>Tipo</th>
+                        <th>Precio ($)</th>
+                        <th>Imagen</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                    <!-- Las filas de los productos serán añadidas aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase Configuration and Initialization -->
+    <script type="module">
+        // Importar las funciones necesarias de los SDKs de Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+        // Tu configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDt_TeuhIOus-BZRpjE0wh4WkFo2gjVafA",
+            authDomain: "scentual-bliss.firebaseapp.com",
+            projectId: "scentual-bliss",
+            storageBucket: "scentual-bliss.firebasestorage.app",
+            messagingSenderId: "536693465513",
+            appId: "1:536693465513:web:c86b628c6fbed38282e4b8",
+            measurementId: "G-4M1EFFB4QC"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Referencias al DOM
+        const perfumeForm = document.getElementById('perfumeForm');
+        const messageDiv = document.getElementById('message');
+        const productsTableBody = document.getElementById('productsTableBody');
+        const formTitle = document.getElementById('form-title');
+        const submitBtn = document.getElementById('submitBtn');
+        const imagenInput = document.getElementById('imagen');
+
+        let isEditing = false; // Estado para determinar si estamos editando
+        let editingProductId = null; // ID del producto que se está editando
+
+        // Tu clave API de ImgBB
+        const imgbbAPIKey = '5714caf6996bb70179e470ffcc71cfc5'; // <--- Reemplaza esto con tu clave API de ImgBB
+
+        // Función para mostrar mensajes
+        function showMessage(msg, type) {
+            messageDiv.textContent = msg;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Función para validar URLs
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;  
+            }
+        }
+
+        // Función para limpiar el formulario
+        function resetForm() {
+            perfumeForm.reset();
+            isEditing = false;
+            editingProductId = null;
+            formTitle.textContent = 'Agregar Nuevo Perfume';
+            submitBtn.textContent = 'Agregar Perfume';
+        }
+
+        // Función para subir la imagen a ImgBB y obtener la URL
+        async function uploadImage(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbAPIKey}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    return result.data.url;
+                } else {
+                    throw new Error('Error al subir la imagen a ImgBB.');
+                }
+            } catch (error) {
+                console.error(error);
+                showMessage('Error al subir la imagen. Por favor, intenta nuevamente.', 'error');
+                return null;
+            }
+        }
+
+        // Evento para manejar el envío del formulario
+        perfumeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Obtener valores del formulario
+            const marca = document.getElementById('marca').value.trim();
+            const nombre = document.getElementById('nombre').value.trim();
+            const genero = document.getElementById('genero').value;
+            const descripcion = document.getElementById('descripcion').value.trim();
+            const tipo = document.getElementById('tipo').value;
+            const precio = parseFloat(document.getElementById('precio').value);
+            const productId = document.getElementById('productId').value;
+            const imagenFile = imagenInput.files[0];
+
+            // Validar campos requeridos
+            if (!marca || !nombre || !descripcion || !tipo || isNaN(precio) || !imagenFile) {
+                showMessage('Por favor, completa todos los campos requeridos.', 'error');
+                return;
+            }
+
+            // Validar tipo de archivo de imagen
+            if (!imagenFile.type.startsWith('image/')) {
+                showMessage('Por favor, selecciona un archivo de imagen válido.', 'error');
+                return;
+            }
+
+            // Subir la imagen a ImgBB
+            const imagenURL = await uploadImage(imagenFile);
+
+            if (!imagenURL) {
+                // Si la subida falló, detener el proceso
+                return;
+            }
+
+            // Crear objeto de perfume
+            const perfume = {
+                marca,
+                nombre,
+                genero: genero || null, // Opcional
+                descripcion,
+                tipo,
+                precio,
+                imagen: imagenURL,
+                createdAt: new Date()
+            };
+
+            try {
+                if (!isEditing) {
+                    // Agregar nuevo perfume a Firestore
+                    const docRef = await addDoc(collection(db, "perfumes"), perfume);
+                    console.log("Documento agregado con ID: ", docRef.id);
+                    showMessage('¡Perfume agregado exitosamente!', 'success');
+                } else {
+                    // Actualizar perfume existente en Firestore
+                    const perfumeRef = doc(db, "perfumes", productId);
+                    await updateDoc(perfumeRef, perfume);
+                    console.log("Documento actualizado con ID: ", productId);
+                    showMessage('¡Perfume actualizado exitosamente!', 'success');
+                }
+                loadProducts(); // Recargar la tabla de productos
+                resetForm(); // Limpiar el formulario
+            } catch (e) {
+                console.error("Error al guardar el documento: ", e);
+                showMessage('Error al guardar el perfume. Por favor, intenta nuevamente.', 'error');
+            }
+        });
+
+        // Función para cargar y mostrar los productos en la tabla
+        async function loadProducts() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "perfumes"));
+                productsTableBody.innerHTML = ''; // Limpiar la tabla
+
+                querySnapshot.forEach((doc) => {
+                    const perfume = doc.data();
+                    const tr = document.createElement('tr');
+
+                    tr.innerHTML = `
+                        <td>${perfume.marca}</td>
+                        <td>${perfume.nombre}</td>
+                        <td>${perfume.genero || 'N/A'}</td>
+                        <td>${perfume.tipo}</td>
+                        <td>${perfume.precio.toFixed(2)}</td>
+                        <td><img src="${perfume.imagen}" alt="${perfume.nombre}" width="50" height="50"></td>
+                        <td>
+                            <button class="action-btn edit" data-id="${doc.id}"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="action-btn delete" data-id="${doc.id}"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                        </td>
+                    `;
+                    productsTableBody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error("Error al cargar los productos: ", error);
+                showMessage('Error al cargar los productos. Por favor, intenta nuevamente.', 'error');
+            }
+        }
+
+        // Función para eliminar un producto
+        async function deleteProduct(id) {
+            if (!confirm('¿Estás seguro de que deseas eliminar este producto?')) return;
+
+            try {
+                await deleteDoc(doc(db, "perfumes", id));
+                showMessage('¡Producto eliminado exitosamente!', 'success');
+                loadProducts(); // Recargar la tabla de productos
+            } catch (error) {
+                console.error("Error al eliminar el producto: ", error);
+                showMessage('Error al eliminar el producto. Por favor, intenta nuevamente.', 'error');
+            }
+        }
+
+        // Función para cargar los datos del producto en el formulario para edición
+        async function editProduct(id) {
+            try {
+                const perfumeRef = doc(db, "perfumes", id);
+                const perfumeSnap = await getDoc(perfumeRef);
+                const perfumeData = perfumeSnap.data();
+
+                if (perfumeData) {
+                    document.getElementById('marca').value = perfumeData.marca;
+                    document.getElementById('nombre').value = perfumeData.nombre;
+                    document.getElementById('genero').value = perfumeData.genero || '';
+                    document.getElementById('descripcion').value = perfumeData.descripcion;
+                    document.getElementById('tipo').value = perfumeData.tipo;
+                    document.getElementById('precio').value = perfumeData.precio;
+                    // No podemos precargar la imagen ya que es un archivo, el usuario debe seleccionarla nuevamente si desea cambiarla
+                    document.getElementById('imagen').value = ''; // Limpiar el campo de archivo
+                    document.getElementById('productId').value = id;
+
+                    // Cambiar el estado del formulario a edición
+                    isEditing = true;
+                    editingProductId = id;
+                    formTitle.textContent = 'Editar Perfume';
+                    submitBtn.textContent = 'Actualizar Perfume';
+                } else {
+                    showMessage('Producto no encontrado.', 'error');
+                }
+            } catch (error) {
+                console.error("Error al obtener el producto: ", error);
+                showMessage('Error al obtener el producto. Por favor, intenta nuevamente.', 'error');
+            }
+        }
+
+        // Evento delegado para los botones Editar y Eliminar en la tabla
+        productsTableBody.addEventListener('click', (e) => {
+            if (e.target.closest('.edit')) {
+                const id = e.target.closest('.edit').getAttribute('data-id');
+                editProduct(id);
+            }
+
+            if (e.target.closest('.delete')) {
+                const id = e.target.closest('.delete').getAttribute('data-id');
+                deleteProduct(id);
+            }
+        });
+
+        // Cargar los productos al cargar la página
+        window.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+
+</body>
+</html>
