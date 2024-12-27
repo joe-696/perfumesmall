@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creador de Combinaciones de Perfumes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primario: #1a1a1a;
+            --color-secundario: #b08d37;
+            --color-texto: #f5f5f5;
+            --color-fondo-opaco: rgba(0, 0, 0, 0.7);
+            --notification-success: #4caf50;
+            --notification-error: #f44336;
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-primario);
+            color: var(--color-texto);
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--color-fondo-opaco);
+            padding: 15px;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: var(--color-secundario);
+            font-size: 1.5rem;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: url('https://source.unsplash.com/1600x900/?perfume-bottles') no-repeat center center/cover;
+            position: relative;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Animación de desvanecimiento */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-fondo-opaco);
+            animation: overlayFade 2s ease-in-out;
+        }
+
+        @keyframes overlayFade {
+            from { background: rgba(0, 0, 0, 0); }
+            to { background: var(--color-fondo-opaco); }
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            color: var(--color-texto);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero-content h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            margin-bottom: 10px;
+            animation: textAppear 1.5s ease-in-out;
+        }
+
+        @keyframes textAppear {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            animation: textAppear 2s ease-in-out;
+        }
+
+        .hero-content button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--color-texto);
+            background-color: var(--color-secundario);
+            border: none;
+            cursor: pointer;
+            transition: transform var(--transition-speed), background-color var(--transition-speed);
+            border-radius: 5px;
+        }
+
+        .hero-content button:hover {
+            transform: scale(1.1);
+            background-color: #d4a257;
+        }
+
+        .section {
+            padding: 80px 20px 50px; /* Ajuste de padding para compensar el header fijo */
+            animation: fadeInSection 1s ease-in-out;
+        }
+
+        @keyframes fadeInSection {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .section h2 {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: var(--color-secundario);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .perfume-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .perfume-card {
+            background-color: var(--color-fondo-opaco);
+            border: 1px solid var(--color-secundario);
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .perfume-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: skewX(-45deg);
+            transition: all var(--transition-speed);
+        }
+
+        .perfume-card:hover::after {
+            left: 100%;
+        }
+
+        .perfume-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .perfume-card img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: transform var(--transition-speed);
+        }
+
+        .perfume-card:hover img {
+            transform: rotate(5deg);
+        }
+
+        .perfume-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--color-secundario);
+        }
+
+        .btn-create {
+            display: block;
+            margin: 30px auto 0;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: var(--color-texto);
+            background-color: var(--color-secundario);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color var(--transition-speed), transform var(--transition-speed);
+        }
+
+        .btn-create:hover {
+            background-color: #d4a257;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background-color: var(--color-fondo-opaco);
+            text-align: center;
+            padding: 20px;
+            color: var(--color-texto);
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* Animaciones adicionales para mejorar la experiencia */
+        .selected {
+            border: 2px solid var(--notification-success) !important;
+            transform: scale(1.05);
+        }
+
+        /* Responsividad */
+        @media (max-width: 600px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .perfume-card img {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>Combinador de Perfumes</header>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Combina tus Perfumes Favoritos</h1>
+            <p>Selecciona entre las mejores marcas para crear tu fragancia única.</p>
+            <button onclick="document.getElementById('selection-section').scrollIntoView({ behavior: 'smooth' })">¡Comenzar!</button>
+        </div>
+    </div>
+    <section id="selection-section" class="section">
+        <h2>Selecciona tus Perfumes</h2>
+        <div class="perfume-grid" id="perfumeGrid">
+            <!-- Las tarjetas de perfumes se agregarán aquí dinámicamente -->
+        </div>
+        <button class="btn-create" onclick="createCombination()">Crear Mi Fragancia</button>
+    </section>
+    <footer>
+        © 2024 Todos los derechos reservados. Creador de Perfumes.
+    </footer>
+
+    <!-- Firebase Configuration and Initialization -->
+    <script type="module">
+        // Importar las funciones necesarias de los SDKs de Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+        // Tu configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDt_TeuhIOus-BZRpjE0wh4WkFo2gjVafA",
+            authDomain: "scentual-bliss.firebaseapp.com",
+            projectId: "scentual-bliss",
+            storageBucket: "scentual-bliss.firebasestorage.app",
+            messagingSenderId: "536693465513",
+            appId: "1:536693465513:web:c86b628c6fbed38282e4b8",
+            measurementId: "G-4M1EFFB4QC"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Función para cargar y mostrar los perfumes completos
+        async function loadCompletePerfumes() {
+            try {
+                const q = query(collection(db, "perfumes"), where("tipo", "==", "Completo"));
+                const querySnapshot = await getDocs(q);
+                const perfumeGrid = document.getElementById('perfumeGrid');
+                perfumeGrid.innerHTML = ''; // Limpiar el grid
+
+                querySnapshot.forEach((doc) => {
+                    const perfume = doc.data();
+                    const perfumeCard = document.createElement('div');
+                    perfumeCard.className = 'perfume-card';
+                    perfumeCard.dataset.name = perfume.nombre;
+
+                    perfumeCard.innerHTML = `
+                        <img src="${perfume.imagen}" alt="${perfume.nombre}">
+                        <h3>${perfume.nombre}</h3>
+                    `;
+
+                    perfumeCard.addEventListener('click', () => {
+                        if (!selectedPerfumes.includes(perfume.nombre)) {
+                            selectedPerfumes.push(perfume.nombre);
+                            perfumeCard.classList.add('selected');
+                        } else {
+                            const index = selectedPerfumes.indexOf(perfume.nombre);
+                            selectedPerfumes.splice(index, 1);
+                            perfumeCard.classList.remove('selected');
+                        }
+                    });
+
+                    perfumeGrid.appendChild(perfumeCard);
+                });
+            } catch (error) {
+                console.error("Error al cargar los perfumes: ", error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error al cargar los perfumes. Por favor, intenta nuevamente.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            }
+        }
+
+        // Llamar a la función para cargar los perfumes completos al cargar la página
+        window.addEventListener('DOMContentLoaded', loadCompletePerfumes);
+
+        // Lista de perfumes seleccionados
+        const selectedPerfumes = [];
+
+        // Función para crear la combinación de fragancias
+        function createCombination() {
+            if (selectedPerfumes.length === 0) {
+                Swal.fire({
+                    title: 'Atención',
+                    text: 'Por favor, selecciona al menos un perfume.',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok'
+                });
+            } else {
+                Swal.fire({
+                    title: '¡Fragancia Creada!',
+                    html: `Has combinado: <strong>${selectedPerfumes.join(', ')}</strong>`,
+                    icon: 'success',
+                    confirmButtonText: 'Genial'
+                });
+            }
+        }
+    </script>
+
+    <!-- Biblioteca SweetAlert2 para mejorar las notificaciones -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

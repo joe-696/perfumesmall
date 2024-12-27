@@ -4,26 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCENTUAL BLISS</title>
-    <!-- Meta Tags para SEO -->
-<meta name="description" content="Descubre las fragancias más exclusivas y sofisticadas diseñadas para resaltar tu personalidad en Scentual Bliss.">
-<meta name="keywords" content="perfumes, fragancias, exclusivo, sofisticado, Scentual Bliss, elegancia, decant, perfume completo">
-<meta name="author" content="Scentual Bliss">
-
-<!-- Meta Tags para Open Graph (Facebook, LinkedIn, etc.) -->
-<meta property="og:title" content="Scentual Bliss - Fragancias Exclusivas y Sofisticadas">
-<meta property="og:description" content="Descubre las fragancias más exclusivas y sofisticadas diseñadas para resaltar tu personalidad en Scentual Bliss.">
-<meta property="og:image" content="https://i.ibb.co/CvHdg8n/image-removebg-preview-9.png">
-<meta property="og:url" content="https://www.scentualbliss.com">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Scentual Bliss">
-
-<!-- Meta Tags para Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Scentual Bliss - Fragancias Exclusivas y Sofisticadas">
-<meta name="twitter:description" content="Descubre las fragancias más exclusivas y sofisticadas diseñadas para resaltar tu personalidad en Scentual Bliss.">
-<meta name="twitter:image" content="https://i.ibb.co/CvHdg8n/image-removebg-preview-9.png">
-<meta name="twitter:site" content="@tuTwitterHandle">
-<meta name="twitter:creator" content="@tuTwitterHandle">
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -94,7 +75,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-           
         }
 
         .navbar.scrolled {
@@ -102,7 +82,7 @@
         }
 
         .navbar .brand {
-           
+            display: flex;
             align-items: center;
         }
 
@@ -499,8 +479,9 @@
         .cart-panel {
             position: fixed;
             top: 0;
-            right: -400px; /* Oculto por defecto */
-            width: 400px;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
             height: 100%;
             background-color: var(--modal-contenido);
             box-shadow: -2px 0 5px rgba(0,0,0,0.5);
@@ -693,6 +674,68 @@
             transform: translateY(-3px);
         }
 
+        /* Modal para Seleccionar Tamaño */
+        .size-modal {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            z-index: 2500;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--modal-fondo);
+            transition: opacity 0.3s ease;
+        }
+
+        .size-modal-content {
+            background-color: var(--modal-contenido);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid var(--color-secundario);
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .size-close-modal {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .size-close-modal:hover,
+        .size-close-modal:focus {
+            color: var(--color-secundario);
+            text-decoration: none;
+        }
+
+        .size-options button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: var(--color-boton);
+            color: #000;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .size-options button:hover {
+            background-color: var(--color-secundario);
+            transform: translateY(-3px);
+        }
+
         /* Notificaciones */
         .notification-container {
             position: fixed;
@@ -851,6 +894,7 @@
 
             .cart-panel {
                 width: 100%;
+                max-width: none;
             }
 
             /* Ajustar la sección de búsqueda y filtros */
@@ -916,8 +960,8 @@
             <!-- Añadido: Logo de la empresa -->
             <a href="admin.html">
                 <img src="https://i.ibb.co/CvHdg8n/image-removebg-preview-9.png" alt="Logo Elegancia Perfumes">
-              </a>
-              <span>SCENTUAL BLISS</span>
+            </a>
+            <span>SCENTUAL BLISS</span>
         </div>
         <ul class="nav-links">
             <li><a href="#hero">Inicio</a></li>
@@ -937,7 +981,7 @@
         <div class="cart-items" id="cart-items">
             <!-- Items del carrito serán añadidos aquí dinámicamente -->
         </div>
-        <div class="cart-total" id="cart-total">Total: $0.00</div>
+        <div class="cart-total" id="cart-total">Total: S/0.00</div>
         <button class="checkout-btn" id="checkout-btn">Proceder al Pago</button>
     </div>
 
@@ -949,8 +993,21 @@
             <div class="modal-details">
                 <h3 id="modal-name">Nombre del Producto</h3>
                 <p id="modal-description">Descripción completa del producto.</p>
-                <div class="price" id="modal-price">$0.00</div>
+                <div class="price" id="modal-price">S/0.00</div>
                 <button class="btn" id="modal-add-to-cart">Añadir al Carrito</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Seleccionar Tamaño (Solo para Decants) -->
+    <div id="size-modal" class="size-modal">
+        <div class="size-modal-content">
+            <span class="size-close-modal">&times;</span>
+            <h3>Selecciona el Tamaño</h3>
+            <div class="size-options">
+                <button data-size="3ml">3ml</button>
+                <button data-size="5ml">5ml</button>
+                <button data-size="10ml">10ml</button>
             </div>
         </div>
     </div>
@@ -1014,7 +1071,6 @@
     <!-- Footer -->
     <section class="footer">
         <p>&copy; 2024 Elegancia Perfumes. Todos los derechos reservados.</p>
-       
     </section>
 
     <!-- Botón Flotante de WhatsApp -->
@@ -1051,13 +1107,17 @@
         const filterButtons = document.querySelectorAll('.filter-buttons button');
 
         // Modal References
-        const modal = document.getElementById('product-modal');
+        const productModal = document.getElementById('product-modal');
         const modalImage = document.getElementById('modal-image');
         const modalName = document.getElementById('modal-name');
         const modalDescription = document.getElementById('modal-description');
         const modalPrice = document.getElementById('modal-price');
         const modalAddToCart = document.getElementById('modal-add-to-cart');
         const closeModal = document.querySelector('.close-modal');
+
+        const sizeModal = document.getElementById('size-modal');
+        const sizeCloseModal = document.querySelector('.size-close-modal');
+        const sizeOptions = document.querySelectorAll('.size-options button');
 
         // Notificación References
         const notificationContainer = document.getElementById('notification-container');
@@ -1067,6 +1127,9 @@
         let filteredProducts = [];
         let currentTypeFilter = 'all';
         let selectedProduct = null; // Producto seleccionado para el modal
+
+        // Variables para el tamaño seleccionado
+        let selectedSize = null;
 
         // Función para mostrar notificaciones
         function showNotification(message, type = 'success') {
@@ -1142,8 +1205,8 @@
                     <div class="product-info">
                         <h3>${perfume.nombre}</h3>
                         <p>${perfume.descripcion}</p>
-                        <div class="price">$${perfume.precio.toFixed(2)}</div>
-                        <button class="btn" data-name="${perfume.nombre}" data-price="${perfume.precio}" data-image="${perfume.imagen}">Añadir al Carrito</button>
+                        <div class="price">S/${perfume.precio.toFixed(2)}</div>
+                        <button class="btn" data-name="${perfume.nombre}" data-price="${perfume.precio}" data-image="${perfume.imagen}" data-type="${perfume.tipo}">Añadir al Carrito</button>
                     </div>
                 `;
 
@@ -1151,7 +1214,7 @@
                 productCard.addEventListener('click', (e) => {
                     // Evitar que el clic en el botón de añadir al carrito también abra el modal
                     if (e.target.tagName.toLowerCase() !== 'button') {
-                        openModal(perfume);
+                        openProductModal(perfume);
                     }
                 });
 
@@ -1201,78 +1264,104 @@
                     const name = button.getAttribute('data-name');
                     const price = parseFloat(button.getAttribute('data-price'));
                     const image = button.getAttribute('data-image');
+                    const type = button.getAttribute('data-type');
 
-                    // Verificar si el producto ya está en el carrito
-                    const existingItemIndex = cart.findIndex(item => item.name === name);
-                    if (existingItemIndex >= 0) {
-                        // Incrementar la cantidad
-                        cart[existingItemIndex].quantity += 1;
+                    if (type.toLowerCase() === 'decant') {
+                        // Abrir el modal para seleccionar tamaño
+                        selectedProduct = { name, price, image, type };
+                        openSizeModal();
                     } else {
-                        // Añadir nuevo producto al carrito
-                        cart.push({ name, price, image, quantity: 1 });
+                        // Añadir directamente al carrito
+                        addToCart({ name, price, image, quantity: 1, size: null });
                     }
-
-                    updateCartUI();
-                    saveCart();
-                    // Reemplazamos el alert con una notificación estética
-                    showNotification('¡Producto añadido al carrito!', 'success');
                 });
             });
         }
 
-        // Función para abrir el modal con detalles del producto
-        function openModal(perfume) {
+        // Función para abrir el modal de Producto
+        function openProductModal(perfume) {
             selectedProduct = perfume; // Guardar el producto seleccionado
 
             modalImage.src = perfume.imagen;
             modalImage.alt = perfume.nombre;
             modalName.textContent = perfume.nombre;
             modalDescription.textContent = perfume.descripcionCompleta || perfume.descripcion; // Usar descripción completa si está disponible
-            modalPrice.textContent = `$${perfume.precio.toFixed(2)}`;
+            modalPrice.textContent = `S/${perfume.precio.toFixed(2)}`;
 
-            modal.style.display = 'block';
+            productModal.style.display = 'block';
         }
 
-        // Función para cerrar el modal
-        function closeModalFunction() {
-            modal.style.display = 'none';
+        // Función para cerrar el modal de Producto
+        function closeProductModal() {
+            productModal.style.display = 'none';
+            selectedProduct = null;
+        }
+
+        // Función para abrir el modal de Tamaño
+        function openSizeModal() {
+            sizeModal.style.display = 'block';
+        }
+
+        // Función para cerrar el modal de Tamaño
+        function closeSizeModal() {
+            sizeModal.style.display = 'none';
+            selectedSize = null;
             selectedProduct = null;
         }
 
         // Evento para cerrar el modal al hacer clic en la 'X'
-        closeModal.addEventListener('click', closeModalFunction);
+        closeModal.addEventListener('click', closeProductModal);
 
-        // Evento para cerrar el modal al hacer clic fuera del contenido del modal
+        // Evento para cerrar el modal de tamaño al hacer clic en la 'X'
+        sizeCloseModal.addEventListener('click', closeSizeModal);
+
+        // Evento para cerrar los modales al hacer clic fuera del contenido
         window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModalFunction();
+            if (e.target === productModal) {
+                closeProductModal();
+            }
+            if (e.target === sizeModal) {
+                closeSizeModal();
             }
         });
 
-        // Evento para añadir al carrito desde el modal
+        // Evento para añadir al carrito desde el modal de Producto
         modalAddToCart.addEventListener('click', () => {
             if (selectedProduct) {
-                const { nombre, precio, imagen } = selectedProduct;
-                const name = nombre;
-                const price = parseFloat(precio);
-                const image = imagen;
+                const { nombre, precio, imagen, tipo } = selectedProduct;
+                const name = nombre || selectedProduct.name;
+                const price = parseFloat(precio) || selectedProduct.price;
+                const image = imagen || selectedProduct.image;
+                const type = tipo || selectedProduct.type;
 
-                // Verificar si el producto ya está en el carrito
-                const existingItemIndex = cart.findIndex(item => item.name === name);
-                if (existingItemIndex >= 0) {
-                    // Incrementar la cantidad
-                    cart[existingItemIndex].quantity += 1;
+                if (type.toLowerCase() === 'decant') {
+                    // Abrir el modal para seleccionar tamaño
+                    selectedProduct = { name, price, image, type };
+                    openSizeModal();
+                    closeProductModal();
                 } else {
-                    // Añadir nuevo producto al carrito
-                    cart.push({ name, price, image, quantity: 1 });
+                    // Añadir directamente al carrito
+                    addToCart({ name, price, image, quantity: 1, size: null });
+                    closeProductModal();
                 }
-
-                updateCartUI();
-                saveCart();
-                // Reemplazamos el alert con una notificación estética
-                showNotification('¡Producto añadido al carrito!', 'success');
-                closeModalFunction();
             }
+        });
+
+        // Función para manejar la selección de tamaño y añadir al carrito
+        sizeOptions.forEach(button => {
+            button.addEventListener('click', () => {
+                selectedSize = button.getAttribute('data-size');
+                if (selectedProduct) {
+                    addToCart({ 
+                        name: selectedProduct.name, 
+                        price: selectedProduct.price, 
+                        image: selectedProduct.image, 
+                        quantity: 1, 
+                        size: selectedSize 
+                    });
+                    closeSizeModal();
+                }
+            });
         });
 
         // Carrito de Compras
@@ -1308,10 +1397,10 @@
                 cartItem.innerHTML = `
                     <img src="${item.image}" alt="${item.name}">
                     <div class="cart-item-details">
-                        <h4>${item.name}</h4>
-                        <p>Precio: $${item.price.toFixed(2)}</p>
+                        <h4>${item.name}${item.size ? ` (${item.size})` : ''}</h4>
+                        <p>Precio: S/${item.price.toFixed(2)}</p>
                         <p>Cantidad: ${item.quantity}</p>
-                        <div class="price">Subtotal: $${(item.price * item.quantity).toFixed(2)}</div>
+                        <div class="price">Subtotal: S/${(item.price * item.quantity).toFixed(2)}</div>
                     </div>
                     <button class="remove-btn" data-index="${index}" aria-label="Eliminar ${item.name}">
                         <i class="bi bi-trash"></i>
@@ -1321,12 +1410,30 @@
                 cartItemsContainer.appendChild(cartItem);
             });
 
-            cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+            cartTotal.textContent = `Total: S/${total.toFixed(2)}`;
         }
 
         // Guardar el carrito en localStorage
         function saveCart() {
             localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Función para añadir productos al carrito
+        function addToCart(product) {
+            const { name, price, image, quantity, size } = product;
+            // Verificar si el producto (con el mismo tamaño si aplica) ya está en el carrito
+            const existingItemIndex = cart.findIndex(item => item.name === name && item.size === size);
+            if (existingItemIndex >= 0) {
+                // Incrementar la cantidad
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                // Añadir nuevo producto al carrito
+                cart.push({ name, price, image, quantity, size });
+            }
+
+            updateCartUI();
+            saveCart();
+            showNotification('¡Producto añadido al carrito!', 'success');
         }
 
         // Eliminar del Carrito
@@ -1360,9 +1467,9 @@
                 // Generar mensaje con los detalles del carrito
                 let message = 'Hola, me gustaría realizar la siguiente compra:\n\n';
                 cart.forEach(item => {
-                    message += `• ${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}\n`;
+                    message += `• ${item.name}${item.size ? ` (${item.size})` : ''} x${item.quantity} - S/${(item.price * item.quantity).toFixed(2)}\n`;
                 });
-                message += `\nTotal: $${cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}\n\nGracias.`;
+                message += `\nTotal: S/${cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}\n\nGracias.`;
 
                 // Reemplaza 'tuNumero' con tu número de WhatsApp en formato internacional sin '+' ni '0'
                 const whatsappNumber = '51930940648'; // Ejemplo: '1234567890'
